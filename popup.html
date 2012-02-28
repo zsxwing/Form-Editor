@@ -16,7 +16,7 @@
     }
 
 	function loadForms(forms) {
-		var formSelect = $("#form_select");
+		var formSelect = $("#form_select").html("");
 		for ( var i = 0; i < forms.length; i++) {
 			var form = forms[i];
 			$("<option/>", {
