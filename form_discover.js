@@ -32,6 +32,7 @@ chrome.extension.onRequest.addListener(function(request, sender, sendResponse) {
 		forms.push(form);
 	}
 	sendResponse({
-		forms : forms
+		forms : forms,
+		charset : document.charset
 	});
 });

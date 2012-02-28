@@ -1,5 +1,7 @@
+<!DOCTYPE html>
 <html>
 <head>
+<meta charset="utf-8">
 <script src="jquery.js"></script>
 <script>
     var isEmptyString = function(str) {
@@ -31,16 +33,18 @@
 	}
 	
 	function loadForm(form) {
-		var action=emptyStringCheck(form.action);
-		var method=emptyStringCheck(form.method);
+		var action = emptyStringCheck(form.action);
+		var method = emptyStringCheck(form.method);
 		$("#form_action").val(action);
 		$("#form_method").val(method);
+		
         $("#form_editor").submit(function(){
-        	var formEditor=$(this).attr({
+        	$(this).attr({
                 "action" : $("#form_action").val(),
                 "method" : $("#form_method").val(),
                 "target" : "_blank"
             });
+        	
         	var formHidden = $("#form_hidden").html("");
         	var inputs = $("#form_detail input");
         	for(var i = 0; i < inputs.length; i += 2) {
@@ -54,6 +58,7 @@
         	}
         	return true;
         });
+        
         var formDetail = $("#form_detail").html("");
         for ( var i = 0; i < form.inputs.length; i++) {
         	formDetail.append(getRow(form.inputs[i], i));
@@ -78,6 +83,9 @@
 		chrome.tabs.getSelected(null, function(tab) {
 			chrome.tabs.sendRequest(tab.id, {}, function handler(response) {
 				console.log(response);
+				$("#form_editor").attr({
+					"accept-charset" : response.charset
+				});
 				loadForms(response.forms);
 			});
 		});
@@ -107,7 +115,7 @@
 </form>
 <!-- form selector -->
 <form><select id="form_select"></select></form>
-<!-- request attr editor -->
+<!-- form editor -->
 <form id="form_editor">
 <div id="form_hidden"></div>
 <input type='submit' /></form>
