@@ -1,0 +1,115 @@
+<html>
+<head>
+<script src="jquery.js"></script>
+<script>
+    var isEmptyString = function(str) {
+        return str == null || typeof str == "undefined" || str.length == 0;
+    }
+
+    function emptyStringCheck(str){
+    	if (typeof str == "undefined") {
+    	    return "";
+    	}
+    	return str;
+    }
+
+	function loadForms(forms) {
+		var formSelect = $("#form_select");
+		for ( var i = 0; i < forms.length; i++) {
+			var form = forms[i];
+			$("<option/>", {
+				val : i,
+				text : emptyStringCheck(form.action)
+			}).appendTo(formSelect);
+		}
+		formSelect.change(function() {
+			loadForm(forms[$(this).val()]);
+        });
+		if(forms.length>0) {
+			loadForm(forms[0]);
+		}
+	}
+	
+	function loadForm(form) {
+		var action=emptyStringCheck(form.action);
+		var method=emptyStringCheck(form.method);
+		$("#form_action").val(action);
+		$("#form_method").val(method);
+        $("#form_editor").submit(function(){
+        	var formEditor=$(this).attr({
+                "action" : $("#form_action").val(),
+                "method" : $("#form_method").val(),
+                "target" : "_blank"
+            });
+        	var formHidden = $("#form_hidden").html("");
+        	var inputs = $("#form_detail input");
+        	for(var i = 0; i < inputs.length; i += 2) {
+        		if(!isEmptyString(inputs[i].value)) {
+	        		formHidden.append($("<input/>",{
+	                    "name" : inputs[i].value,
+	                    "value" : inputs[i+1].value,
+	                    "type" : "text"
+	                }));
+        		}
+        	}
+        	return true;
+        });
+        var formDetail = $("#form_detail").html("");
+        for ( var i = 0; i < form.inputs.length; i++) {
+        	formDetail.append(getRow(form.inputs[i], i));
+        }
+	}
+	
+	function getRow(input, rowIndex) {
+		return $("<tr/>")
+		.append(
+				$("<td/>").append($("<input/>", {
+					    "value" : emptyStringCheck(input.name),
+					    "type" : "text"
+        })))
+		.append(
+				$("<td/>").append($("<input/>", {
+				    "value" : emptyStringCheck(input.value),
+				    "type" : "text"
+        })));
+	}
+	
+	$(function() {
+		chrome.tabs.getSelected(null, function(tab) {
+			chrome.tabs.sendRequest(tab.id, {}, function handler(response) {
+				console.log(response);
+				loadForms(response.forms);
+			});
+		});
+	});
+</script>
+</head>
+<body>
+<!-- from attr editor -->
+<form>
+<table>
+	<thead>
+		<tr>
+			<th>Action</th>
+			<th><input id="form_action" type="text" /></th>
+		</tr>
+		<tr>
+			<th>Method</th>
+			<th><select id="form_method">
+				<option value="get">get</option>
+				<option value="post">post</option>
+			</select></th>
+		</tr>
+	</thead>
+	<tbody id="form_detail">
+	</tbody>
+</table>
+</form>
+<!-- form selector -->
+<form><select id="form_select"></select></form>
+<!-- request attr editor -->
+<form id="form_editor">
+<div id="form_hidden"></div>
+<input type='submit' /></form>
+</body>
+</html>
