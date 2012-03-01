@@ -1,6 +1,6 @@
 {
   "name": "Form Editor",
-  "version": "1.0",
+  "version": "1.0.1",
   "description": "An extension for editing custom request(GET or POST) to web server.",
   "permissions": [ "tabs" ],
   "content_scripts": [
