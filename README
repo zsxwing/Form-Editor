@@ -3,11 +3,15 @@ Form Editor
 Introduction
 
 An extension for editing custom request(GET or POST) to web server.
-1. Auto extract the form from the web page.
+1. Auto extract forms from the web page.
 2. You can modify the form method.
 3. You can modify the form action.
 4. You can add or remove the <name, value> pair.
 5. You can edit the <name, value> pair.
+
+Version 1.1
+1. Support to extract forms from iframes.
+
 
 How to install
 
