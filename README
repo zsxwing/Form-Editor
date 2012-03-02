@@ -12,6 +12,8 @@ An extension for editing custom request(GET or POST) to web server.
 Version 1.1
 1. Support to extract forms from iframes.
 
+Version 1.2
+1. Support to edit the form accept-charset.
 
 How to install
 
