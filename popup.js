@@ -69,26 +69,27 @@ $(function() {
 			"type" : "text"
 		}))).append(
 				$("<td/>").append(
-						$("<button type='button' >&nbsp;-&nbsp;</button>")
+						$("<button type='button' title='Remove this GET(POST) parameter' >&nbsp;-&nbsp;</button>")
 								.click(function() {
 									$(this).parent().parent().remove();
 								})));
 	}
 
-	function reload(response) {
-		loadForms(response.forms);
+	function reload() {
+		chrome.tabs.getSelected(null, function(tab) {
+			chrome.tabs.sendRequest(tab.id, {}, function handler(response) {
+				loadForms(response.forms);
+			});
+		});
 	}
 
+	$("#reload_button").click(function() {
+		reload();
+	});
+	
 	$("#add_button").click(function() {
 		$("#form_detail").append(getRow("", ""));
 	});
 
-	chrome.tabs.getSelected(null, function(tab) {
-		chrome.tabs.sendRequest(tab.id, {}, function handler(response) {
-			reload(response);
-			$("#reload_button").click(function() {
-				reload(response);
-			});
-		});
-	});
+	reload();
 });
