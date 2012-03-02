@@ -30,28 +30,6 @@ $(function() {
         $("#form_action").val(action);
         $("#form_method").val(method);
         $("#form_charset").val(form.acceptCharset);
-        $("#form_editor").submit(function() {
-            $(this).attr({
-                "action" : $("#form_action").val(),
-                "method" : $("#form_method").val(),
-                "accept-charset" : $("#form_charset").val(),
-                "target" : "_blank"
-            });
-
-            var formHidden = $("#form_hidden").html("");
-            var inputs = $("#form_detail input");
-            for ( var i = 0; i < inputs.length; i += 2) {
-                if (!isEmptyString(inputs[i].value)) {
-                    formHidden.append($("<input/>", {
-                        "name" : inputs[i].value,
-                        "value" : inputs[i + 1].value,
-                        "type" : "text"
-                    }));
-                }
-            }
-            return true;
-        });
-
         var formDetail = $("#form_detail").html("");
         for ( var i = 0; i < form.inputs.length; i++) {
             var input = form.inputs[i];
@@ -76,6 +54,9 @@ $(function() {
     }
 
     function reload() {
+        $("#form_action").val("");
+        $("#form_charset").val("");
+        $("#form_detail").html("");
         chrome.tabs.getSelected(null, function(tab) {
             chrome.tabs.sendRequest(tab.id, {}, function handler(response) {
                 loadForms(response.forms);
@@ -89,6 +70,28 @@ $(function() {
     
     $("#add_button").click(function() {
         $("#form_detail").append(getRow("", ""));
+    });
+    
+    $("#form_editor").submit(function() {
+        $(this).attr({
+            "action" : $("#form_action").val(),
+            "method" : $("#form_method").val(),
+            "accept-charset" : $("#form_charset").val(),
+            "target" : "_blank"
+        });
+
+        var formHidden = $("#form_hidden").html("");
+        var inputs = $("#form_detail input");
+        for ( var i = 0; i < inputs.length; i += 2) {
+            if (!isEmptyString(inputs[i].value)) {
+                formHidden.append($("<input/>", {
+                    "name" : inputs[i].value,
+                    "value" : inputs[i + 1].value,
+                    "type" : "text"
+                }));
+            }
+        }
+        return true;
     });
 
     reload();

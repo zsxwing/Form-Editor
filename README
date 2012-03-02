@@ -4,16 +4,18 @@ Introduction
 
 An extension for editing custom request(GET or POST) to web server.
 1. Auto extract forms from the web page.
-2. You can modify the form method.
-3. You can modify the form action.
-4. You can add or remove the <name, value> pair.
-5. You can edit the <name, value> pair.
+2. You can modify the form method, action and accept-charset.
+3. You can add or remove the <name, value> pair.
+4. You can edit the <name, value> pair.
 
 Version 1.1
 1. Support to extract forms from iframes.
 
 Version 1.2
 1. Support to edit the form accept-charset.
+
+Version 1.2.1
+1. Support to edit the form without opening any page.
 
 How to install
 
