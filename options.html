@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Form Editor History</title>
+</head>
+<script src="jquery.js"></script>
+<script src="history.js"></script>
+<script>
+	function reload() {
+		var forms = loadHistory();
+		var historyBoard = $("#history").html("");
+		for ( var i = 0; i < forms.length; i++) {
+			var form = forms[i];
+			var removeButton = $(
+					"<button type='button' title='Remove the history' value='"+i+"'>&nbsp;-&nbsp;</button>")
+					.click(function() {
+						removeHistory($(this).attr('value'));
+						reload();
+					});
+			var tr = $("<tr/>").append($("<td/>").append(removeButton)).append(
+					$("<td/>", {
+						text : JSON.stringify(form)
+					}))
+			historyBoard.append(tr);
+		}
+	}
+
+	$(function() {
+		reload();
+		$("#history_size").val(getHistoryMaxSize());
+	});
+
+	function resizeHistory() {
+		var size = parseInt($("#history_size").val());
+		if (isNaN(size) || size<0 || size>100) {
+		} else {
+			setHistoryMaxSize(size);
+			truncHistory();
+			reload();
+		}
+		$("#history_size").val(getHistoryMaxSize());
+	}
+</script>
+<body>
+<table>
+	<thead>
+		<tr>
+			<th>History</th>
+			<th>
+			<button onclick="javascript:cleanHistory();reload();"
+				title="clean all of the history">Clean All</button>
+			</th>
+		</tr>
+	</thead>
+	<tbody id="history">
+	</tbody>
+</table>
+<label>History Max Size(0-100)</label>
+<input id="history_size" type="text" />
+<button onclick="javascript:resizeHistory();"
+	title="Save the history max size">Save</button>
+</body>
+</html>
