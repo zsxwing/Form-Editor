@@ -3,66 +3,76 @@
 <head>
 <meta charset="utf-8">
 <script src="jquery.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+<script src="js/bootstrap.min.js"></script>
 <script src="history.js"></script>
 <script src="popup.js"></script>
 <style>
 table {
-    border: 1px solid #909090;
-    -webkit-border-radius: 6px;
+	border: 1px solid #909090;
+	-webkit-border-radius: 6px;
 }
 
 th {
-    font-size: 9px;
-    font-weight: normal;
-    text-align: left;
+	font-size: 9px;
+	font-weight: normal;
+	text-align: left;
 }
 </style>
 </head>
 <body style="background-color: #f2f3f4;">
-<!-- from attr editor -->
-<button id="add_button" type="button"
-    title="Add an empty GET(POST) parameter">+</button>
-<button id="reload_button" type="button"
-    title="Reload forms from the page">Reload</button>
-<button onclick="javascript:chrome.tabs.create({url:'options.html'});"
-    type="button" title="Show the submit history">History</button>
-<table>
-    <thead>
-        <tr>
-            <th>action</th>
-            <th><input id="form_action" type="text" /></th>
-            <th></th>
-        </tr>
-        <tr>
-            <th>method</th>
-            <th><select id="form_method">
-                <option value="get">get</option>
-                <option value="post">post</option>
-            </select></th>
+	<div id="warning" class="alert">
+		<strong>Warning!</strong>
+		<div id="warning_message"></div>
+	</div>
 
-            <th></th>
-        </tr>
-        <tr>
-            <th>accept-charset</th>
-            <th><input id="form_charset" type="text" /></th>
-            <th></th>
-        </tr>
 
-        <tr>
-            <th>Name</th>
-            <th>Value</th>
-            <th></th>
+	<!-- from attr editor -->
+	<button id="add_button" class="btn btn-primary" type="button"
+		title="Add an empty GET(POST) parameter">+</button>
+	<button id="reload_button" class="btn btn-primary" type="button"
+		title="Reload forms from the page">Reload</button>
+	<button class="btn btn-primary"
+		onclick="javascript:chrome.tabs.create({url:'options.html'});"
+		type="button" title="Show the submit history">History</button>
+	<table>
+		<thead>
+			<tr>
+				<th>action</th>
+				<th><input id="form_action" type="text" /></th>
+				<th></th>
+			</tr>
+			<tr>
+				<th>method</th>
+				<th><select id="form_method">
+						<option value="get">get</option>
+						<option value="post">post</option>
+				</select></th>
 
-        </tr>
-    </thead>
-    <tbody id="form_detail">
-    </tbody>
-</table>
-<!-- form editor -->
-<form id="form_editor">
-<div id="form_hidden"></div>
-<input type='submit' title="Submit current form" /></form>
-<!-- form selector -->
-<select id="form_select"></select>
+				<th></th>
+			</tr>
+			<tr>
+				<th>accept-charset</th>
+				<th><input id="form_charset" type="text" /></th>
+				<th></th>
+			</tr>
+
+			<tr>
+				<th>Name</th>
+				<th>Value</th>
+				<th></th>
+
+			</tr>
+		</thead>
+		<tbody id="form_detail">
+		</tbody>
+	</table>
+	<!-- form editor -->
+	<form id="form_editor">
+		<div id="form_hidden"></div>
+		<input type='submit' title="Submit current form" />
+	</form>
+	<!-- form selector -->
+	<select id="form_select"></select>
 </body>
 </html>
