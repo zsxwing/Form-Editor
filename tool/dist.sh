@@ -2,7 +2,7 @@
 
 # only test on Mac
 
-js_files="form_discover.js popup.js history.js"
+js_files="form_discover.js popup.js history.js options.js"
 
 optim_js() {
     for js_file in $js_files

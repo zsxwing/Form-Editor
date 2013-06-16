@@ -19,6 +19,9 @@ Version 1.2
 Version 1.3
 * Support to save the submit history.
 
+Version 1.3.2
+* Update to manifest V2.
+
 ## How to install
 
 Click [here][Form Editor on Chrome Web Store] to install in your chrome.
